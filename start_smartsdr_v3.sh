@@ -2,7 +2,7 @@
 
 SDR_VER="v3.2.39"
 RADIO="RDX6600"
-USER="A_USER"
+SDR_USER=$USER
 LOCK_DIR="/tmp/smartsdr"
 LOCK_FILE="${LOCK_DIR}/lock"
 
@@ -21,7 +21,7 @@ done
 touch $LOCK_FILE
 echo "LOCKED..."
 
-cp ~/Flexradio/SSDR_${RADIO}.settings "/home/${USER}/radiotools/drive_c/users/${USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings"
+cp ~/Flexradio/SSDR_${RADIO}.settings "/home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings"
 env WINEPREFIX=$HOME/radiotools wine "c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe" &
 
 PROC=$$
@@ -63,7 +63,7 @@ done
 touch $LOCK_FILE
 echo "LOCKED..."
 
-cp "/home/${USER}/radiotools/drive_c/users/${USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings_saved
+cp "/home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings_saved
 
 rm $LOCK_FILE
 echo "UNLOCKED..."
