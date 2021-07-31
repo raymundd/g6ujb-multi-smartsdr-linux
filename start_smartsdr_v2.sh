@@ -53,9 +53,16 @@ rm $LOCK_FILE
 echo "UNLOCKED..."
 echo $SDR
 
+spin='-\|/'
+i=0
 while [[ $(ps --no-headers -p $SDR) ]]
 do
 	# wait for it to finish
+	do
+    	i=$(( (i+1) %4 ))
+		printf "\r${spin:$i:1}"
+  		sleep .1
+	done
 	echo -n "."
 	sleep 5
 done
