@@ -63,8 +63,7 @@ done
 touch $LOCK_FILE
 echo "LOCKED..."
 
-cp "/home/${USER}/radiotools/drive_c/users/${USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings
-_saved
+cp "/home/${USER}/radiotools/drive_c/users/${USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings_saved
 
 rm $LOCK_FILE
 echo "UNLOCKED..."
