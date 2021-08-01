@@ -15,6 +15,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# Preparations before running this script.
+#
+# Create WINE Prefix folder:
+# env WINEPREFIX=$HOME/<PREFIX_NAME> wineboot --init
+# Run winetricks to install .Net version in new WINEPREFIX
+# env WINEPREFIX=$HOME/<PREFIX_NAME> winetricks --force dotnet40 corefonts
+# env WINEPREFIX=$HOME/<PREFIX_NAME> winetricks --force dotnet462 corefonts
 
 SDR_VER="v3.2.39"
 RADIO="RDX6600"
