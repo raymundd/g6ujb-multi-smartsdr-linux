@@ -43,14 +43,14 @@ if [ ! id $3 &>/dev/null ]; then
 fi
 
 # Version should be #.#.#
-if [[ ! $SDR_VER =~ ^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
+if [[ ! $SDR_VER =~ ^v[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
 	echo "Invalid version."
 	exit 1
 fi
 
 # Make sure the radio name is a sensinble length - Can't expect it to be more than 50 characters, can be alphanumeric with
 # _-.
-if [[ ! ${RADIO} =~ ^v[-,0-9,a-z,A-Z,_,\.,:]{1,50}$ ]]; then
+if [[ ! ${RADIO} =~ ^[-,0-9,a-z,A-Z,_,\.,:]{1,50}$ ]]; then
 	echo "Invalid STATION name or length (valid characters [0-9,a-z,A-Z,-,_,.,:] length < 20)."
 	exit 1
 fi
