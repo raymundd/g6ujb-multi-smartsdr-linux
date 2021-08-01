@@ -38,7 +38,7 @@ SDR_USER=$3
 
 # Some basic validations before we try to do anything.
 # Make sure this is a valid user before proceeding.
-if [ ! $(id $SDR_USER &>/dev/null) ]; then
+if ! id $SDR_USER &>/dev/null; then
 	echo "ERROR: User not found."
 	echo
 	exit 1
