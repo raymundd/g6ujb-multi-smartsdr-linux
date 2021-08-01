@@ -25,7 +25,7 @@
 # env WINEPREFIX=$HOME/<PREFIX_NAME> winetricks --force dotnet462 corefonts
 
 # These options are required on the command line so that I can simplify the launch scripts.
-if [ $# -lt 3 ]; then
+if [ $# -lt 3 ]; them
 	echo "Usage: $0 <SDR_VERSION> <STATION> <USER>"
 	echo "e.g. $0 2.7.6 RADIO_1"
 	exit 1
@@ -43,14 +43,14 @@ if [ ! id $3 &>/dev/null ]; then
 fi
 
 # Version should be #.#.#
-if [[ ! $SDR_VER =~ ^v[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
+if [[ ! $SDR_VER =~ ^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
 	echo "Invalid version."
 	exit 1
 fi
 
 # Make sure the radio name is a sensinble length - Can't expect it to be more than 50 characters, can be alphanumeric with
 # _-.
-if [[ ! ${RADIO} =~ ^[-,0-9,a-z,A-Z,_,\.,:]{1,50}$ ]]; then
+if [[ ! ${RADIO} =~ ^v[-,0-9,a-z,A-Z,_,\.,:]{1,50}$ ]]; then
 	echo "Invalid STATION name or length (valid characters [0-9,a-z,A-Z,-,_,.,:] length < 20)."
 	exit 1
 fi
@@ -79,8 +79,16 @@ if [ -s ~/Flexradio/SSDR_${RADIO}.settings ]; then
 	cp ~/Flexradio/SSDR_${RADIO}.settings "/home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings"
 fi
 
+SMARTSDR="c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe"
+
 # Launch SmartSDR.exe in the WINE Prefix previosly created - see comments in header.
-env WINEPREFIX=$HOME/radiotools wine "c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe" &
+if [ -e ${SMARTSDR} ]; then
+	env WINEPREFIX=$HOME/radiotools wine "${SMARTSDR}" &
+else
+	echo "${SMARTSDR} is not available, check version matches installed."
+	rm $LOCK_FILE
+	exit 1
+fi
 
 # Lets remember the pid of this bash session so that we can find the associated instance of SmartSDR.exe that was launched.
 PROC=$$
