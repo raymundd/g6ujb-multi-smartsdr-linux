@@ -48,8 +48,8 @@ if [[ ! $SDR_VER =~ ^v[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
 	exit 1
 fi
 
-# Make sure the radio name is a sensinble length - Can't expect it to be more than 50 characters, can be alphanumeric with
-# _-.
+# Make sure the radio name is a sensinble length - Can't expect it to be more than 50 characters,
+# can be alphanumeric with _-.
 if [[ ! ${RADIO} =~ ^[-,0-9,a-z,A-Z,_,\.,:]{1,50}$ ]]; then
 	echo "Invalid STATION name or length (valid characters [0-9,a-z,A-Z,-,_,.,:] length < 20)."
 	exit 1
@@ -82,10 +82,10 @@ fi
 SMARTSDR="c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe"
 
 # Launch SmartSDR.exe in the WINE Prefix previosly created - see comments in header.
-if [ -e ${SMARTSDR} ]; then
+if [ -e "${SMARTSDR}" ]; then
 	env WINEPREFIX=$HOME/radiotools wine "${SMARTSDR}" &
 else
-	echo "${SMARTSDR} is not available, check version matches installed."
+	echo "File not found, ${SMARTSDR} is not available, check version matches installed."
 	rm $LOCK_FILE
 	exit 1
 fi
