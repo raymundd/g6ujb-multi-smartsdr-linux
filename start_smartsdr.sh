@@ -25,8 +25,8 @@
 # env WINEPREFIX=$HOME/<PREFIX_NAME> winetricks --force dotnet462 corefonts
 
 # These options are required on the command line so that I can simplify the launch scripts.
-if [ $# -lt 3 ]; then
-	echo "Usage: $0 <SDR_VERSION> <STATION> <USER>"
+if [ $# -lt 4 ]; then
+	echo "Usage: $0 <SDR_VERSION> <STATION> <USER> <WINE_PREFIX>"
 	echo "e.g. $0 2.7.6 RADIO_1"
 	echo
 	exit 1
@@ -35,6 +35,7 @@ fi
 SDR_VER="v${1}"
 RADIO=$2
 SDR_USER=$3
+PREFIX=$4
 
 # Some basic validations before we try to do anything.
 # Make sure this is a valid user before proceeding.
@@ -55,6 +56,13 @@ fi
 # can be alphanumeric with _-.
 if [[ ! ${RADIO} =~ ^[-,0-9,a-z,A-Z,_,\.,:]{1,50}$ ]]; then
 	echo "ERROR: Invalid STATION name or length (valid characters [0-9,a-z,A-Z,-,_,.,:] length <= 20)."
+	echo
+	exit 1
+fi
+
+#Make sure the PREFIX folder exists
+if [ ! -d $HOME/$PREFIX ]; then
+	echo "ERROR: WINE Prefix folder missing."
 	echo
 	exit 1
 fi
@@ -81,16 +89,16 @@ echo "INFO:...LOCKED..."
 
 # Get a copy of the SSDR.settings in place if its available, otherwise when SmartSDR.exe launches it will create a new one.
 if [ -s ~/Flexradio/SSDR_${RADIO}.settings ]; then
-	cp ~/Flexradio/SSDR_${RADIO}.settings "/home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings"
+	cp ~/Flexradio/SSDR_${RADIO}.settings "/home/${SDR_USER}/${PREFIX}/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings"
 	echo "INFO: Restored settings file."
 fi
 
 SMARTSDR="c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe"
-REAL_DIR=$(env WINEPREFIX=$HOME/radiotools winepath --unix "${SMARTSDR}" 2>/dev/null)
+REAL_DIR=$(env WINEPREFIX=$HOME/$PREFIX winepath --unix "${SMARTSDR}" 2>/dev/null)
 
 # Launch SmartSDR.exe in the WINE Prefix previosly created - see comments in header.
 if [ -e "${REAL_DIR}" ]; then
-	env WINEPREFIX=$HOME/radiotools wine "${SMARTSDR}" &>/dev/null &
+	env WINEPREFIX=$HOME/$PREFIX wine "${SMARTSDR}" &>/dev/null &
 else
 	echo "ERROR: File not found, ${SMARTSDR} is not available, check version matches installed."
 	rm $LOCK_FILE
@@ -156,7 +164,7 @@ echo "INFO: Saving settings file."
 echo "INFO:...LOCKED..."
 
 # Place a copy of the existing SSDR.settings into a backup location to retaine any changes ready for subsequent launches.
-cp "/home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings
+cp "/home/${SDR_USER}/${PREFIX}/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings
 
 rm $LOCK_FILE
 echo "INFO:...UNLOCKED..."
