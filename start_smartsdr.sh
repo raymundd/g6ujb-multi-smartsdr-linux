@@ -90,7 +90,7 @@ REAL_DIR=$(env WINEPREFIX=$HOME/radiotools winepath --unix "${SMARTSDR}" 2>/dev/
 
 # Launch SmartSDR.exe in the WINE Prefix previosly created - see comments in header.
 if [ -e "${REAL_DIR}" ]; then
-	env WINEPREFIX=$HOME/radiotools wine "${SMARTSDR}" &
+	env WINEPREFIX=$HOME/radiotools wine "${SMARTSDR}" &>/dev/null &
 else
 	echo "ERROR: File not found, ${SMARTSDR} is not available, check version matches installed."
 	rm $LOCK_FILE
@@ -141,6 +141,8 @@ do
 		printf "\rINFO: Running ${spin:$i:1}"
   		sleep .5
 done
+
+echo
 
 # Check for lock state before locking for this instance.
 while [ -e $LOCK_FILE ]
