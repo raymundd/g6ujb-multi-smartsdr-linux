@@ -28,6 +28,7 @@
 if [ $# -lt 3 ]; then
 	echo "Usage: $0 <SDR_VERSION> <STATION> <USER>"
 	echo "e.g. $0 2.7.6 RADIO_1"
+	echo
 	exit 1
 fi
 
@@ -38,20 +39,23 @@ SDR_USER=$3
 # Some basic validations before we try to do anything.
 # Make sure this is a valid user before proceeding.
 if [ ! id $3 &>/dev/null ]; then
-	echo "User not found."
+	echo "ERROR: User not found."
+	echo
 	exit 1
 fi
 
 # Version should be #.#.#
 if [[ ! $SDR_VER =~ ^v[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
-	echo "Invalid version."
+	echo "ERROR: Invalid version."
+	echo
 	exit 1
 fi
 
 # Make sure the radio name is a sensinble length - Can't expect it to be more than 50 characters,
 # can be alphanumeric with _-.
 if [[ ! ${RADIO} =~ ^[-,0-9,a-z,A-Z,_,\.,:]{1,50}$ ]]; then
-	echo "Invalid STATION name or length (valid characters [0-9,a-z,A-Z,-,_,.,:] length < 20)."
+	echo "ERROR: Invalid STATION name or length (valid characters [0-9,a-z,A-Z,-,_,.,:] length <= 20)."
+	echo
 	exit 1
 fi
 
@@ -65,18 +69,20 @@ if [ ! -d $LOCK_DIR ]; then
 	mkdir -p $LOCK_DIR
 fi
 
+# Check for lock state before locking for this instance.
 while [ -e $LOCK_FILE ]
 do
-	echo "waiting..."
+	echo "INFO: Waiting for lock to clear..."
 	sleep 2
 done
 
 touch $LOCK_FILE
-echo "LOCKED..."
+echo "INFO:...LOCKED..."
 
 # Get a copy of the SSDR.settings in place if its available, otherwise when SmartSDR.exe launches it will create a new one.
 if [ -s ~/Flexradio/SSDR_${RADIO}.settings ]; then
 	cp ~/Flexradio/SSDR_${RADIO}.settings "/home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings"
+	echo "INFO: Restored settings file."
 fi
 
 SMARTSDR="c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe"
@@ -85,8 +91,10 @@ SMARTSDR="c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe"
 if [ -e "${SMARTSDR}" ]; then
 	env WINEPREFIX=$HOME/radiotools wine "${SMARTSDR}" &
 else
-	echo "File not found, ${SMARTSDR} is not available, check version matches installed."
+	echo "ERROR: File not found, ${SMARTSDR} is not available, check version matches installed."
 	rm $LOCK_FILE
+	echo "INFO:...UNLOCKED..."
+	echo
 	exit 1
 fi
 
@@ -97,7 +105,7 @@ PROC=$$
 while [ ! `pgrep -cf "${SDR_VER}.+SmartSDR.exe"` ]
 do
 	# wait for it to start
-	echo "Wait for SmartSDR to start..."
+	echo "INFO: Waiting for SmartSDR to start..."
 	sleep 1
 done
 
@@ -112,14 +120,15 @@ do
 		SDR=$pid
 		break
 	else
-		echo "SmartSDR.exe not running."
+		echo "ERROR: SmartSDR.exe not running."
+		echo
 		exit 1
 	fi
 done
 
 rm $LOCK_FILE
-echo "UNLOCKED..."
-echo $SDR
+echo "INFO:...UNLOCKED..."
+echo "INFO: Active SmartSDR PID = $SDR"
 
 # Spinner routine - Lets just show that the script is alive and waiting for SmartSDR.exe to exit.
 spin='-\|/'
@@ -128,15 +137,24 @@ while [[ $(ps --no-headers -p $SDR) ]]
 do
 	# wait for it to finish
     	i=$(( (i+1) %4 ))
-		printf "\r${spin:$i:1}"
+		printf "\rINFO: Running ${spin:$i:1}"
   		sleep .5
 done
 
+# Check for lock state before locking for this instance.
+while [ -e $LOCK_FILE ]
+do
+	echo "INFO: Waiting for lock to clear..."
+	sleep 2
+done
+
 touch $LOCK_FILE
-echo "LOCKED..."
+echo "INFO: Saving settings file."
+echo "INFO:...LOCKED..."
 
 # Place a copy of the existing SSDR.settings into a backup location to retaine any changes ready for subsequent launches.
 cp "/home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings
 
 rm $LOCK_FILE
-echo "UNLOCKED..."
+echo "INFO:...UNLOCKED..."
+echo
