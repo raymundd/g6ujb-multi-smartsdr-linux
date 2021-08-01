@@ -86,9 +86,10 @@ if [ -s ~/Flexradio/SSDR_${RADIO}.settings ]; then
 fi
 
 SMARTSDR="c:\Program Files\FlexRadio Systems\SmartSDR ${SDR_VER}\SmartSDR.exe"
+REAL_DIR=$(env WINEPREFIX=$HOME/radiotools winepath --unix ${SMARTSDR} 2>/dev/null)
 
 # Launch SmartSDR.exe in the WINE Prefix previosly created - see comments in header.
-if [ -e "${SMARTSDR}" ]; then
+if [ -e "${REAL_DIR}" ]; then
 	env WINEPREFIX=$HOME/radiotools wine "${SMARTSDR}" &
 else
 	echo "ERROR: File not found, ${SMARTSDR} is not available, check version matches installed."
