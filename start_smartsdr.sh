@@ -25,7 +25,7 @@
 # env WINEPREFIX=$HOME/<PREFIX_NAME> winetricks --force dotnet462 corefonts
 
 # These options are required on the command line so that I can simplify the launch scripts.
-if [ $# -lt 3 ]; them
+if [ $# -lt 3 ]; then
 	echo "Usage: $0 <SDR_VERSION> <STATION> <USER>"
 	echo "e.g. $0 2.7.6 RADIO_1"
 	exit 1
@@ -43,7 +43,7 @@ if [ ! id $3 &>/dev/null ]; then
 fi
 
 # Version should be #.#.#
-if [[ ! $SDR_VER =~ ^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
+if [[ ! $SDR_VER =~ ^v[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
 	echo "Invalid version."
 	exit 1
 fi
