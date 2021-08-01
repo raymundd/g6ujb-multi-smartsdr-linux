@@ -160,8 +160,8 @@ do
 done
 
 touch $LOCK_FILE
-echo "INFO: Saving settings file."
 echo "INFO:...LOCKED..."
+echo "INFO: Saving settings file."
 
 # Place a copy of the existing SSDR.settings into a backup location to retaine any changes ready for subsequent launches.
 cp "/home/${SDR_USER}/${PREFIX}/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings" ~/Flexradio/SSDR_${RADIO}.settings
