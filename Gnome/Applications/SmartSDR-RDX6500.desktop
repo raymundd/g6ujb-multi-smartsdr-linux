@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=SmartSDR_RDX6500
+Comment=SmartSDR RDX6500
+Exec=/home/raymundd/Flexradio/g6ujb-multi-smartsdr-linux/start_smartsdr.sh 2.7.6 RDX6500 raymundd radiotools
+Terminal=true
+Icon=36C5_SmartSDR.0
+X-MultipleArgs=false
+Type=Application
+Categories=AudioVideo;Audio;HamRadio;
+StartupNotify=true
