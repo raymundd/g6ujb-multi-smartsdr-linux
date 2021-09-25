@@ -1,4 +1,4 @@
-# g6ujb-wine-flex-tools
+# g6ujb-multi-smartsdr-linux
 
 This is a collection of tools that I use to manage instances of SmartSDR on Linux running under Wine.
 
@@ -23,7 +23,7 @@ When SmartSDR launches it gets parameters from the file %APPDATA%\FlexRadio Syst
 
 1. Start an instance of SmartSDR and connect to your first FlexRadio.
 
-        ./start_smartsdr_v2.sh
+        ./start_smartsdr.sh <FLEX_VERSION> <STATION1> <USERNAME> <WINE_PREFIX>
 
 2. Set the STATION name by double clicking the textbox near the **"STATION:"** label located at lower middle of the main window, press "Enter" when name is complete. e.g. **RADIO_1**
 3. Under the SmartSDR settings menu, disable the options "Autostart CAT with SmartSDR" and "Autostart DAX with SmartSDR". (Only do this if you are going to use nCAT and nDAX).
@@ -34,7 +34,7 @@ When SmartSDR launches it gets parameters from the file %APPDATA%\FlexRadio Syst
 
 6. Start SmartSDR again and connect to your other FlexRadio, set the STATION: name to a different name to the first, again make any changes you need to this instance as required, see step 3.
 
-         ./start_smartsdr_v3.sh         
+         ./start_smartsdr.sh <FLEX_VERSION> <STATION2> <USERNAME> <WINE_PREFIX>         
 
 7. Make another copy of the SSDR.settings file.
 
