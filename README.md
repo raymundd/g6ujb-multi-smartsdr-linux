@@ -24,23 +24,23 @@ When SmartSDR launches it gets parameters from the file %APPDATA%\FlexRadio Syst
 1. Start an instance of SmartSDR and connect to your first FlexRadio.
 
         ./start_smartsdr_v2.sh
-        
-3. Set the STATION name by double clicking the textbox near the **"STATION:"** label located at lower middle of the main window, press "Enter" when name is complete. e.g. **RADIO_1**
-4. Under the SmartSDR settings menu, disable the options "Autostart CAT with SmartSDR" and "Autostart DAX with SmartSDR". (Only do this if you are going to use nCAT and nDAX).
-5. Exit the running SmartSDR - this is necessary to ensure settings are written back to persistent storage.
-6. Make a copy of the SSDR.settings file.
 
-        cp /home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings ~/Flexradio/RADIO1.settings
-        
-7. Start SmartSDR again and connect to your other FlexRadio, set the STATION: name to a different name to the first, again make any changes you need to this instance as required, see step 3.
+2. Set the STATION name by double clicking the textbox near the **"STATION:"** label located at lower middle of the main window, press "Enter" when name is complete. e.g. **RADIO_1**
+3. Under the SmartSDR settings menu, disable the options "Autostart CAT with SmartSDR" and "Autostart DAX with SmartSDR". (Only do this if you are going to use nCAT and nDAX).
+4. Exit the running SmartSDR - this is necessary to ensure settings are written back to persistent storage.
+5. Make a copy of the SSDR.settings file.
 
-         ./start_smartsdr_v3.sh
-         
-9. Make another copy of the SSDR.settings file.
-        
+        cp /home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings ~/Flexradio/RADIO1.settings        
+
+6. Start SmartSDR again and connect to your other FlexRadio, set the STATION: name to a different name to the first, again make any changes you need to this instance as required, see step 3.
+
+         ./start_smartsdr_v3.sh         
+
+7. Make another copy of the SSDR.settings file.
+
         cp /home/${SDR_USER}/radiotools/drive_c/users/${SDR_USER}/AppData/Roaming/FlexRadio Systems/SSDR.settings ~/Flexradio/RADIO2.settings
-        
-9. Exit this instance of SmartSDR.
+
+8. Exit this instance of SmartSDR.
 
 ## Switching the SmartSDR STATION name
 
