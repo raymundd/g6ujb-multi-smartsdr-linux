@@ -2,8 +2,8 @@
 Version=1.0
 Name=SmartSDR_RDX6600
 Comment=SmartSDR RDX6600
-Exec=/home/raymundd/Flexradio/g6ujb-multi-smartsdr-linux/start_smartsdr.sh 3.2.39 RDX6600 raymundd radiotools
-Terminal=true
+Exec=gnome-terminal --hide-menubar --geometry 40x6 --title SmartSDR_RDX6600 --command "/home/raymundd/Flexradio/g6ujb-multi-smartsdr-linux/start_smartsdr.sh 3.2.39 RDX6600 raymundd radiotools"
+Terminal=false
 Icon=36C5_SmartSDR.0
 X-MultipleArgs=false
 Type=Application
