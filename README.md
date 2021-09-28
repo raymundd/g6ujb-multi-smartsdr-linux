@@ -19,6 +19,13 @@ When SmartSDR launches it gets parameters from the file %APPDATA%\FlexRadio Syst
 
 > **Please be aware that this is not a perfect solution, it works for my situation.**
 
+### Installation
+
+Download and store in ~/Flexradio/g6ujb-multi-smartsdr-linux
+
+Copy ~/Flexradio/g6ujb-multi-smartsdr-linux/Gnome/Applications/SmartSDR-RDX6500.desktop ~/.local/share/applications/
+Copy ~/Flexradio/g6ujb-multi-smartsdr-linux/Gnome/Applications/SmartSDR-RDX6600.desktop ~/.local/share/applications/
+
 ### Getting things setup
 
 1. Start an instance of SmartSDR and connect to your first FlexRadio.
